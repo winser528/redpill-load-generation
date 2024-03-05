@@ -56,13 +56,6 @@ ENV ARCH=x86_64 \
 ARG EXTRACTED_KSRC
 COPY --from=extract ${EXTRACTED_KSRC} ${LINUX_SRC}
 
-RUN if [ "6.2.4" = "$TARGET_VERSION" ];then \
-      cd ${REDPILL_LOAD_SRC}/config/DS918+/6.2.4-25556/ && pwd && \
-      sed -i 's#ee021d9cd012a434578309845e3af999a43f81a7887ceec7319e6005ac5930d4#24336ef3aa4ab2c484602c6fe9b3b05edf68b7915df8db07b96a7bf21eff5fda#g' config.json && \
-      sed -i 's#3f0f954c9bb6ef0fa195e244f6219ecb3c7a7b297ff6d584a119437eec612e88#e48eacb14f775119a1aba1c36bca33b784d6bb7e8fe0a2d2352070aa5a517bea#g' config.json && \
-      sed -i 's#bdb6a1b0f48a5ed713b9095db2b5976971cf714425982a1b5782f70749231324#66f8ccbc99e430b205c998a076ce7cbcfa2fbe4dd024cf4355a510b8d75783a0#g' config.json \
-    fi
-
 RUN if [ "apollolake" = "$TARGET_PLATFORM" ] || [ "broadwellnk" = "$TARGET_PLATFORM"  ] || [ "geminilake" = "$TARGET_PLATFORM" ] || [ "v1000" = "$TARGET_PLATFORM" ] || [ "denverton" = "$TARGET_PLATFORM" ]; then mkdir -p ${LINUX_SRC} && echo '+' > ${LINUX_SRC}/.scmversion; fi && \
     if [ "$COMPILE_WITH" = "kernel" ]; then \
         cp ${LINUX_SRC}/synoconfigs/${TARGET_PLATFORM} ${LINUX_SRC}/.config && \
@@ -76,6 +69,6 @@ COPY Makefile /opt/
 
 COPY entrypoint.sh /entrypoint.sh
 COPY helper.sh ./
-RUN chmod +x /entrypoint.sh  && chmod +x ./helper.sh
+RUN chmod +x /entrypoint.sh && chmod +x ./helper.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
