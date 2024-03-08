@@ -37,7 +37,7 @@ ARG REDPILL_LOAD_REPO=https://github.com/winser528/redpill-load.git
 ARG REDPILL_LOAD_BRANCH=master
 ARG REDPILL_LOAD_SRC=/opt/redpill-load
 
-RUN git clone --depth=1 ${REDPILL_LKM_REPO}  -b ${REDPILL_LKM_BRANCH}  ${REDPILL_LKM_SRC} \
+RUN git clone --depth=1 ${REDPILL_LKM_REPO}  -b ${REDPILL_LKM_BRANCH}  ${REDPILL_LKM_SRC} && \
     git clone --depth=1 ${REDPILL_LOAD_REPO} -b ${REDPILL_LOAD_BRANCH} ${REDPILL_LOAD_SRC}
 
 LABEL redpill-tool-chain=${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION}
