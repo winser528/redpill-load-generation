@@ -25,8 +25,7 @@ RUN if [ "6.2.4" = "$TARGET_VERSION" ]; then \
       sed -i 's#jessie-updates#jessie#g' /etc/apt/sources.list; \
     fi
 
-RUN apt-get update && \
-    apt-get install --yes ca-certificates build-essential git libssl-dev curl cpio bspatch vim gettext bc bison flex dosfstools kmod && \
+RUN apt-get update && apt-get install -y ca-certificates build-essential git libssl-dev curl cpio bspatch gettext bc bison flex dosfstools kmod && \
     curl --progress-bar --output /usr/bin/jq --location https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/bin/jq && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
@@ -34,12 +33,12 @@ ARG REDPILL_LKM_REPO=https://github.com/RedPill-TTG/redpill-lkm.git
 ARG REDPILL_LKM_BRANCH=master
 ARG REDPILL_LKM_SRC=/opt/redpill-lkm
 
-ARG REDPILL_LOAD_REPO=https://github.com/RedPill-TTG/redpill-load.git
+ARG REDPILL_LOAD_REPO=https://github.com/winser528/redpill-load.git
 ARG REDPILL_LOAD_BRANCH=master
 ARG REDPILL_LOAD_SRC=/opt/redpill-load
 
-RUN git clone --depth 1 ${REDPILL_LKM_REPO}  -b ${REDPILL_LKM_BRANCH}  ${REDPILL_LKM_SRC}
-RUN git clone --depth 1 ${REDPILL_LOAD_REPO} -b ${REDPILL_LOAD_BRANCH} ${REDPILL_LOAD_SRC}
+RUN git clone --depth=1 ${REDPILL_LKM_REPO}  -b ${REDPILL_LKM_BRANCH}  ${REDPILL_LKM_SRC} \
+    git clone --depth=1 ${REDPILL_LOAD_REPO} -b ${REDPILL_LOAD_BRANCH} ${REDPILL_LOAD_SRC}
 
 LABEL redpill-tool-chain=${TARGET_PLATFORM}-${TARGET_VERSION}-${TARGET_REVISION}
 

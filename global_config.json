@@ -44,6 +44,10 @@
       "redpill_load": {
         "source_url": "https://github.com/winser528/redpill-load.git",
         "branch": "master"
+      },
+      "build_env": {
+        "jun_mod": 0,
+        "debug": 0
       }
     },
     {
